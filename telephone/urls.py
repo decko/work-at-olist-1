@@ -17,8 +17,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+from core.views import Return200Ok
+
+app_name = 'core'
+
+core_urlpatterns = ([
+    path('', Return200Ok, name='root')
+], 'core')
 
 urlpatterns = [
-    path('', include('core.urls', namespace='core'), name='core'),
+    path('api/v1/', include('core.urls')),
     path('admin/', admin.site.urls),
+    path('', include(core_urlpatterns)),
 ]
