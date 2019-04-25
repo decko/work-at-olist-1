@@ -71,3 +71,15 @@ def test_telephone_calls_api_namespace_definition(client):
 
     assert resolved.namespace == "core"
     assert resolved.url_name == "calls"
+
+
+def test_telephone_api_returning_a_empty_list(client):
+    """
+    Test if a GET request return an list from api endpoint.
+    """
+
+    url = '/api/v1/calls/'
+
+    request = client.get(url)
+
+    assert isinstance(request.data, list)
