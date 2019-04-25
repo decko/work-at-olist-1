@@ -47,3 +47,27 @@ def test_telephone_api_namespace_definition(client):
 
     assert resolved.namespace == "core"
     assert resolved.url_name == "api"
+
+
+def test_telephone_calls_api_endpoint(client):
+    """
+    Test if calls api url(/api/v1/calls/) return 200 Ok HTTP Status.
+    """
+
+    url = '/api/v1/calls/'
+    request = client.get(url)
+
+    assert request.status_code == status.HTTP_200_OK
+
+
+def test_telephone_calls_api_namespace_definition(client):
+    """
+    Test if the namespace of call api url (/api/v1/calls/) is defined as
+    "core" and "calls" as his name.
+    """
+
+    url = '/api/v1/calls/'
+    resolved = resolve(url)
+
+    assert resolved.namespace == "core"
+    assert resolved.url_name == "calls"
