@@ -1,4 +1,4 @@
-from django.urls import resolve
+from django.urls import resolve, reverse
 from rest_framework import status
 
 
@@ -14,7 +14,7 @@ def test_telephone_endpoint_return_200_OK(client):
 
 def test_telephone_endpoint_namespace_definition(client):
     """
-    Test if the namespace of root url(/) is defined as "core" and "index"
+    Test if the namespace of root url(/) is defined as "core" and "root"
     as his name.
     """
 
@@ -22,7 +22,7 @@ def test_telephone_endpoint_namespace_definition(client):
     resolved = resolve(url)
 
     assert resolved.namespace == "core"
-    assert resolved.url_name == "index"
+    assert resolved.url_name == "root"
 
 
 def test_telephone_api_endpoint(client):
@@ -38,15 +38,15 @@ def test_telephone_api_endpoint(client):
 
 def test_telephone_api_namespace_definition(client):
     """
-    Test if the namespace of root api url(/api/v1/) is defined as "core" and
-    "api" as his name.
+    Test if the namespace of root api url(/api/v1/) is defined as "api" and
+    "root" as his name.
     """
 
     url = '/api/v1/'
     resolved = resolve(url)
 
-    assert resolved.namespace == "core"
-    assert resolved.url_name == "api"
+    assert resolved.namespace == "api"
+    assert resolved.url_name == "root"
 
 
 def test_telephone_calls_api_endpoint(client):
@@ -63,13 +63,13 @@ def test_telephone_calls_api_endpoint(client):
 def test_telephone_calls_api_namespace_definition(client):
     """
     Test if the namespace of call api url (/api/v1/calls/) is defined as
-    "core" and "calls" as his name.
+    "api" and "calls" as his name.
     """
 
     url = '/api/v1/calls/'
     resolved = resolve(url)
 
-    assert resolved.namespace == "core"
+    assert resolved.namespace == "api"
     assert resolved.url_name == "calls"
 
 
@@ -78,7 +78,7 @@ def test_telephone_api_returning_a_empty_list(client):
     Test if a GET request return an list from api endpoint.
     """
 
-    url = '/api/v1/calls/'
+    url = reverse('api:calls')
 
     request = client.get(url)
 
