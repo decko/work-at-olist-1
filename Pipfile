@@ -1,25 +1,20 @@
 [[source]]
-
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
 
-
 [requires]
-
 python_version = "3.7.2"
 
-
 [packages]
-
 "psycopg2-binary" = "*"
 django = "*"
 djangorestframework = "*"
 django-heroku = "*"
 gunicorn = "*"
 
-
 [dev-packages]
 pytest = "*"
 pytest-django = "*"
-
+flake8 = "*"
+ipdb = "*"
