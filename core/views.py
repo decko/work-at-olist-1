@@ -16,4 +16,11 @@ def Return200Ok(request, **kwargs):
             'destination': '22222222222',
     }
 
-    return Response(data=[call_start_record,], status=200)
+    call_stop_record = {
+            'id': 2,
+            'type': 'stop',
+            'timestamp': datetime.now(),
+            'call_id': 1,
+    }
+
+    return Response(data=[call_start_record, call_stop_record], status=200)
