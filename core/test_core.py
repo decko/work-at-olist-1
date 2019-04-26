@@ -109,6 +109,7 @@ def test_fields_returned_on_a_calls_api_request(client):
     request = client.get(url)
 
     assert set(request.data[0]).issuperset(fields)
+    assert fields.issuperset(set(request.data[0]))
 
 
 def test_field_type_returned_on_a_calls_api_request(client):
