@@ -83,3 +83,26 @@ def test_telephone_api_returning_a_empty_list(client):
     request = client.get(url)
 
     assert isinstance(request.data, list)
+
+
+def test_fields_returned_on_a_calls_api_request(client):
+    """
+    Test which fields return on a GET request to Calls API. The response should
+    obey this format:
+        {
+          "id":  // Record unique identificator;
+          "type":  // Indicate if it's a call "start" or "end" record;
+          "timestamp":  // The timestamp of when the event occured;
+          "call_id":  // Unique for each call record pair;
+          "source":  // The subscriber phone number that originated the call;
+          "destination":  // The phone number receiving the call.
+        }
+    """
+
+    fields = {'id', 'type', 'timestamp', 'call_id', 'source', 'destination'}
+
+    url = reverse('api:calls')
+
+    request = client.get(url)
+
+    assert set(request.data[0]).issuperset(fields)
