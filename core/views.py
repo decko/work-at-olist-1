@@ -8,12 +8,12 @@ from rest_framework.response import Response
 @api_view(['GET'])
 def Return200Ok(request, **kwargs):
     call_start_record = {
-            "id",
-            "type",
-            "timestamp",
-            "call_id",
-            "source",
-            "destination",
+            'id': 1,
+            'type': 'start',
+            'timestamp': datetime.now(),
+            'call_id': 1,
+            'source': '11111111111',
+            'destination': '22222222222',
     }
 
     return Response(data=[call_start_record,], status=200)
