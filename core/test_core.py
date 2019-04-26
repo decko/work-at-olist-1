@@ -1,4 +1,7 @@
+from datetime import datetime
+
 from django.urls import resolve, reverse
+
 from rest_framework import status
 
 
@@ -106,3 +109,34 @@ def test_fields_returned_on_a_calls_api_request(client):
     request = client.get(url)
 
     assert set(request.data[0]).issuperset(fields)
+
+
+def test_field_type_returned_on_a_calls_api_request(client):
+    """
+    Test each field type that came on a Calls API response.
+    They must obey this format:
+        {
+          "id":  int,
+          "type":  str,
+          "timestamp":  datetime,
+          "call_id":  int,
+          "source":  str
+          "destination":  str
+        }
+    """
+
+    fields = {
+        "id":  int,
+        "type":  str,
+        "timestamp":  datetime,
+        "call_id":  int,
+        "source":  str,
+        "destination":  str,
+    }
+
+    url = reverse('api:calls')
+
+    request = client.get(url)
+
+    for field, type in fields.items():
+        assert isinstance(request.data[0][field], type)
