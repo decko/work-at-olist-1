@@ -140,3 +140,54 @@ def test_field_type_returned_on_a_calls_api_request(client):
 
     for field, type in fields.items():
         assert isinstance(request.data[0][field], type)
+
+
+def test_fields_returned_on_a_stop_call_api_request(client):
+    """
+    Test which fields return on a stop call registry from GET request to
+    Calls API. The response should obey this format:
+        {
+          "id":  // Record unique identificator;
+          "type":  // Indicate if it's a call "start" or "end" record;
+          "timestamp":  // The timestamp of when the event occured;
+          "call_id":  // Unique for each call record pair;
+        }
+    """
+
+    fields = {'id', 'type', 'timestamp', 'call_id'}
+
+    url = reverse('api:calls')
+
+    request = client.get(url)
+
+    assert set(request.data[0]).issuperset(fields)
+    assert fields.issuperset(set(request.data[1]))
+
+
+def test_field_type_returned_on_a_stop_call_api_request(client):
+    """
+    Test each field type that came on a stop registry from a GET request
+    to Calls API response. They must obey this format:
+        {
+          "id":  int,
+          "type":  str,
+          "timestamp":  datetime,
+          "call_id":  int,
+          "source":  str
+          "destination":  str
+        }
+    """
+
+    fields = {
+        "id":  int,
+        "type":  str,
+        "timestamp":  datetime,
+        "call_id":  int,
+    }
+
+    url = reverse('api:calls')
+
+    request = client.get(url)
+
+    for field, type in fields.items():
+        assert isinstance(request.data[1][field], type)
